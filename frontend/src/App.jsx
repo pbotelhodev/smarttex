@@ -84,9 +84,25 @@ const App = () => {
 
   // -- FUNÇÕES ---
 
-  const handleContact = (data) => {
-    console.log("Contato do Lead:", data);
-    reset();
+  const handleContact = async (data) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/contato", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        alert("Mensagem enviada com sucesso!");
+        reset();
+      } else {
+        alert("Erro ao enviar mensagem.");
+      }
+    } catch (error) {
+      console.error("Erro de conexão:", error);
+    }
   };
 
   // --- EFEITOS ---
