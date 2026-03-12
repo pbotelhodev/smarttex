@@ -34,7 +34,7 @@ import {
 
 //import images
 import Memora from "./assets/memora.png";
-import TiJ from "./assets/teodoroijacobina.png";
+import TiJ from "./assets/tij.png";
 import Vestibule from "./assets/vestibule.png";
 
 import ProjectCard from "./components/ProjectCard";
