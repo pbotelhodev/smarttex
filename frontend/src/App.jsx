@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
 import {
-  Terminal,
   Code2,
   Cpu,
   ShieldCheck,
@@ -10,10 +10,9 @@ import {
   Database,
   ArrowRight,
   CheckCircle2,
-  XCircle,
   Menu,
+  MessageSquare,
   X,
-  ChevronRight,
   Lock,
   Mail,
   Phone,
@@ -21,11 +20,8 @@ import {
   Globe,
   HardDrive,
   CloudLightning,
-  Repeat,
-  MessageSquare,
   FileText,
   Rocket,
-  Activity,
   GitMerge,
   Layers,
   Container,
@@ -77,14 +73,21 @@ const App = () => {
     if (name) {
       setShowIntro(false);
     }
-    return name
+    return name;
   });
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const inputRef = useRef(null);
 
-  // -- FUNÇÕES AUXILIARES ---
+  const { register, handleSubmit, reset } = useForm();
+
+  // -- FUNÇÕES ---
+
+  const handleContact = (data) => {
+    console.log("Contato do Lead:", data);
+    reset();
+  };
 
   // --- EFEITOS ---
   useEffect(() => {
@@ -237,40 +240,40 @@ const App = () => {
                 <a
                   href="#stack"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-2 text-slate-300 hover:text-white transition-colors"
+                  className=" font-mono py-2 text-slate-300 hover:text-white transition-colors"
                 >
                   /stack
                 </a>
                 <a
                   href="#solucoes"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-2 text-slate-300 hover:text-white transition-colors"
+                  className=" font-mono py-2 text-slate-300 hover:text-white transition-colors"
                 >
                   /solucoes
                 </a>
                 <a
                   href="#metodo"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-2 text-slate-300 hover:text-white transition-colors"
+                  className=" font-mono py-2 text-slate-300 hover:text-white transition-colors"
                 >
                   /metodo
                 </a>
                 <a
                   href="#infra"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-2 text-slate-300 hover:text-white transition-colors"
+                  className=" font-mono py-2 text-slate-300 hover:text-white transition-colors"
                 >
                   /infra
                 </a>
                 <a
                   href="#projetos"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="py-2 text-slate-300 hover:text-white transition-colors"
+                  className=" font-mono py-2 text-slate-300 hover:text-white transition-colors"
                 >
                   /projetos
                 </a>
 
-                <div className="h-px bg-white/10 my-2" />
+                <div className=" font-mono h-px bg-white/10 my-2" />
 
                 <a
                   href="#login"
@@ -832,7 +835,7 @@ const App = () => {
             </h2>
 
             <p className="text-slate-400 text-sm sm:text-base md:text-sm lg:text-base max-w-2xl mx-auto">
-              Entre em contato para discutir o seu {''}
+              Entre em contato para discutir o seu {""}
               <span className="text-white font-bold border-b border-white/30">
                 projeto
               </span>
@@ -879,26 +882,45 @@ const App = () => {
             </div>
 
             <div className="md:col-span-8">
-              <form className="space-y-3 md:space-y-4">
+              <form
+                onSubmit={handleSubmit(handleContact)}
+                className="space-y-3 md:space-y-4"
+              >
                 <div className="grid md:grid-cols-2 gap-3 md:gap-4">
                   <InputGroup
                     label="Nome Completo *"
                     placeholder="Seu nome"
                     defaultValue={visitorName}
+                    {...register("name", { required: true })}
                   />
-                  <InputGroup label="Email *" placeholder="seu@email.com" />
+                  <InputGroup
+                    label="Email *"
+                    placeholder="seu@email.com"
+                    {...register("email", { required: true })}
+                  />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-3 md:gap-4">
-                  <InputGroup label="Telefone" placeholder="(11) 99999-9999" />
-                  <InputGroup label="Empresa" placeholder="Nome da empresa" />
+                  <InputGroup
+                    label="Telefone"
+                    placeholder="(99) 99999-9999"
+                    {...register("phone", { required: true })}
+                  />
+                  <InputGroup
+                    label="Empresa"
+                    placeholder="Nome da empresa"
+                    {...register("company", { required: true })}
+                  />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
                   <label className="font-mono text-xs text-slate-500 uppercase tracking-wider font-bold">
                     Orçamento Estimado
                   </label>
-                  <select className="input-bunker px-3 py-2.5 text-sm appearance-none rounded-none cursor-pointer">
+                  <select
+                    className="input-bunker px-3 py-2.5 text-sm appearance-none rounded-none cursor-pointer"
+                    {...register("budget", { required: true })}
+                  >
                     <option>Selecione uma faixa</option>
                     <option>R$ Até 1k</option>
                     <option>R$ 1k - R$ 5k</option>
@@ -916,6 +938,7 @@ const App = () => {
                   <textarea
                     className="input-bunker px-3 py-2.5 h-24 md:h-28 text-sm resize-none rounded-none"
                     placeholder="Conte sobre seu projeto, objetivos e prazos..."
+                    {...register("message", { required: true })}
                   ></textarea>
                 </div>
 
@@ -1089,15 +1112,15 @@ const App = () => {
                     <li className="whitespace-nowrap">smarttexdev@gmail.com</li>
                     <li>
                       <a
-                        href="#"
+                        href="https://wa.me/5538997334556"
                         className="hover:text-white transition-colors"
                       >
-                        LinkedIn
+                        Whatsapp
                       </a>
                     </li>
                     <li>
                       <a
-                        href="#"
+                        href="https://github.com/pbotelhodev"
                         className="hover:text-white transition-colors"
                       >
                         GitHub
