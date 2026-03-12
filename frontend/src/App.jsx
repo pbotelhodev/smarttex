@@ -72,7 +72,13 @@ const App = () => {
 
   // --- ESTADOS ---
   const [showIntro, setShowIntro] = useState(true);
-  const [visitorName, setVisitorName] = useState("");
+  const [visitorName, setVisitorName] = useState(() => {
+    const name = localStorage.getItem("visitorName") || "";
+    if (name) {
+      setShowIntro(false);
+    }
+    return name
+  });
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -81,14 +87,6 @@ const App = () => {
   // -- FUNÇÕES AUXILIARES ---
 
   //Verifica se o usário já visitou o site antes (usando localStorage)
-  useEffect(() => {
-    const visitorName = localStorage.getItem("visitorName");
-
-    if (visitorName) {
-      setVisitorName(visitorName);
-      setShowIntro(false);
-    }
-  }, []);
 
   // --- EFEITOS ---
   useEffect(() => {
