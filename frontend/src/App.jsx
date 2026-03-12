@@ -86,8 +86,6 @@ const App = () => {
 
   // -- FUNÇÕES AUXILIARES ---
 
-  //Verifica se o usário já visitou o site antes (usando localStorage)
-
   // --- EFEITOS ---
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -863,16 +861,18 @@ const App = () => {
                   icon={<Mail size={18} />}
                   label="Email"
                   value="smarttexdev@gmail.com"
+                  sub="Envie uma mensagem detalhando seu projeto e necessidades"
                 />
                 <ContactItem
                   icon={<Phone size={18} />}
                   label="Telefone"
-                  value="+55 (11) 99999-9999"
+                  value="+55 (38) 99733-4556"
+                  sub="WhatsApp disponível para mensagens e chamadas"
                 />
                 <ContactItem
                   icon={<MapPin size={18} />}
                   label="Localização"
-                  value="São Paulo, Brasil"
+                  value="Montes Claros - MG, Brasil"
                   sub="Atendimento Remoto Global"
                 />
               </div>
