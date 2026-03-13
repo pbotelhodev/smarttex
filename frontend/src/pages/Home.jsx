@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 
 //import images
+import LogoSmarttex from "../assets/logo.png";
 import Memora from "../assets/memora.png";
 import TiJ from "../assets/tij.png";
 import Vestibule from "../assets/vestibule.png";
@@ -141,8 +142,8 @@ const App = () => {
             BEM-VINDO À
           </span>
           <img
-            src="https://i.ibb.co/NkY7qzm/Logo-Smarttex-Sem-Fundo-White.png"
-            alt="Logo-Smarttex-Sem-Fundo-White"
+            src={LogoSmarttex}
+            alt="Logo-Smarttex"
             className="py-4 h-20 sm:h-24 mb-8 object-contain"
           />
           <form onSubmit={handleEnterSite} className="w-full flex flex-col">
@@ -201,8 +202,8 @@ const App = () => {
           <div className="h-8 overflow-hidden flex items-center">
             <a href="/" className="flex items-center gap-2">
               <img
-                src="https://i.ibb.co/NkY7qzm/Logo-Smarttex-Sem-Fundo-White.png"
-                alt="Logo-Smarttex-Sem-Fundo-White"
+                src={LogoSmarttex}
+                alt="Logo-Smarttex"
                 className="h-7 object-contain"
               />
             </a>
@@ -981,8 +982,8 @@ const App = () => {
                 {/* Brand (4/12) */}
                 <div className="col-span-4">
                   <img
-                    src="https://i.ibb.co/NkY7qzm/Logo-Smarttex-Sem-Fundo-White.png"
-                    alt="Logo-Smarttex-Sem-Fundo-White"
+                    src={LogoSmarttex}
+                    alt="Logo-Smarttex"
                     className="h-7 mb-3 object-contain"
                   />
                   <p className="text-slate-500 leading-relaxed max-w-sm">
