@@ -298,7 +298,7 @@ const App = () => {
                 <div className=" font-mono h-px bg-white/10 my-2" />
 
                 <a
-                  href="#login"
+                  href="/login"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2 py-2 text-slate-400 hover:text-white transition-colors"
                 >
@@ -1040,7 +1040,7 @@ const App = () => {
                   <ul className="space-y-3 text-slate-500">
                     <li>
                       <a
-                        href="#login"
+                        href="/login"
                         className="hover:text-white transition-colors"
                       >
                         Área do Cliente
