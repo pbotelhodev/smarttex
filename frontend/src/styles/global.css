@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&display=swap");
-
 :root {
   color-scheme: dark;
 }
@@ -31,7 +29,6 @@ body {
     sans-serif;
   letter-spacing: -0.03em;
 }
-
 
 h1,
 h2,
