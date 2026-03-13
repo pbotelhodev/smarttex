@@ -1,11 +1,27 @@
 const transporter = require("../config/mailer");
+const prisma = require("../config/prisma");
 
 /**
  * Função responsável por disparar notificações para o sistema e e-mail pessoal
  * @param {Object} dados - Nome, email, telefone, empresa, budget e mensagem
  */
+
 const sendContactEmail = async (dados) => {
   const { name, email, phone, company, budget, message } = dados;
+
+  // --- SALVA O LEAD NO BANCO DE DADOS ---
+  const novoLead = await prisma.lead.create({
+    data: {
+      name,
+      email,
+      phone,
+      company,
+      budget,
+      message,
+    },
+  });
+  
+  console.log("✅ Lead salvo no PostgreSQL com ID:", novoLead.id);
 
   // --- CONFIGURAÇÃO DO E-MAIL 1: DESIGN PREMIUM (SMARTTEX) ---
   const mailSmarttex = {

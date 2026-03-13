@@ -68,13 +68,17 @@ const App = () => {
 
   // --- ESTADOS ---
   const [showIntro, setShowIntro] = useState(true);
+  const [isReturn, setIsReturn] = useState(false);
   const [visitorName, setVisitorName] = useState(() => {
     const name = localStorage.getItem("visitorName") || "";
+    
     if (name) {
       setShowIntro(false);
+      setIsReturn(true);
     }
     return name;
   });
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -167,7 +171,7 @@ const App = () => {
             <button
               type="button"
               onClick={() => setShowIntro(false)}
-              className="text-slate-600 font-mono font-semibold text-[10px] mt-4 uppercase tracking-widest transition-opacity duration-300"
+              className="text-slate-700 font-mono font-semibold text-[10px] mt-4 uppercase tracking-widest transition-opacity duration-300"
             >
               Pular
             </button>
@@ -317,11 +321,11 @@ const App = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-sm mb-5 md:mb-7 lg:mb-8 2xl:mb-9">
             <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
             <span className="font-mono text-[10px] md:text-xs text-slate-300 tracking-wider uppercase">
-              OLÁ,{" "}
+              {isReturn ? `Bem vindo de volta, ` : "Olá "}
               <span className="text-white font-bold">
                 {visitorName.toUpperCase() || "VISITANTE"}.
               </span>{" "}
-              VAMOS CONSTRUIR ALGO JUNTOS?
+              VAMOS CONSTRUIR ALGO {isReturn ? 'Novo' : null} JUNTOS?
             </span>
           </div>
 
