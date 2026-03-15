@@ -1,5 +1,5 @@
-const express = from ("express");
-const cors = from ("cors");
+const express = require ("express");
+const cors = require ("cors");
 
 // Importa as rotas
 const contactRoutes = require('./routes/contactRoutes');

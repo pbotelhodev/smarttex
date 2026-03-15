@@ -1,10 +1,8 @@
-import { PrismaClient } from '"@prisma/client"';
-
-// Instancia o cliente do Prisma
-const prisma = new PrismaClient();
+const prisma = require("../config/prisma");
 
 //Aqui ficará a lógica de negócios, ou seja, o que o sistema deve fazer para registrar um novo usuário
-const registerNewUser = async (data) => { //use o mesmo nome da função exportada no controller
+const registerService = async (data) => {
+  //use o mesmo nome da função exportada no controller
   const newUser = await prisma.user.create({
     data: {
       full_name: data.full_name,
@@ -15,7 +13,7 @@ const registerNewUser = async (data) => { //use o mesmo nome da função exporta
   return newUser;
 };
 
-module.exports = { registerNewUser };
+module.exports = { registerService };
 
 //prisma.user.create({ data: { ... } }); // [CREATE] Grava novo registro
 //prisma.user.findMany();                // [READ] Busca todos os registros

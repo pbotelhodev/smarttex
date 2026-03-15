@@ -1,12 +1,12 @@
-const { registerNewUser } = require("../services/registerServices"); //Use o mesmo nome da função exportada no service
+const { registerService } = require("../services/registerServices"); //Use o mesmo nome da função exportada no service
 
-const handleRegisterForm = async (req, res) => {
+const registerController = async (req, res) => {
   // O req.body é onde o React coloca as informações do formulário
   const dados = req.body;
 
   try {
     // Mandamos o serviço trabalhar e esperamos (await) ele terminar
-    await registerNewUser(dados);
+    await registerService(dados);
 
     // Se chegou aqui, deu certo. Respondemos status 200 (OK)
     return res.status(201).json({ message: "Usuário registrado com sucesso!" });
@@ -21,7 +21,7 @@ const handleRegisterForm = async (req, res) => {
   }
 };
 
-module.exports = { handleRegisterForm };
+module.exports = { registerController };
 
 // 200 - OK: A requisição foi bem-sucedida e o servidor retornou os dados solicitados.
 // 201 - Created: A requisição foi bem-sucedida e um novo recurso foi criado como resultado.

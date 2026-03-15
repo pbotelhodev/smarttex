@@ -21,7 +21,7 @@ const App = () => {
 
   const handleLogin = (data) => {
 
-    alert(data.email + " - " + data.password + (data.fullName ? " - " + data.fullName : ""));
+    alert(data.email + " - " + data.password_hash + (data.full_name ? " - " + data.full_name : ""));
 
   };
 
@@ -92,7 +92,7 @@ const App = () => {
                       <User size={14} />
                     </div>
                     <input
-                      {...register("fullName")}
+                      {...register("full_name")}
                       type="text"
                       placeholder="Identificação"
                       className="w-full bg-[#050505] border border-white/5 text-white text-xs px-10 py-2.5 sm:py-3 focus:outline-none focus:border-[#BFA473]/30 focus:bg-[#0F1115] transition-all placeholder:text-slate-800 font-mono"
@@ -139,7 +139,7 @@ const App = () => {
                     <Lock size={14} />
                   </div>
                   <input
-                    {...register("password")}
+                    {...register("password_hash")}
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className="w-full bg-[#050505] border border-white/5 text-white text-xs px-10 py-2.5 sm:py-3 focus:outline-none focus:border-[#BFA473]/30 focus:bg-[#0F1115] transition-all placeholder:text-slate-800 font-mono"

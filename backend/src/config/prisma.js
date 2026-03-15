@@ -1,9 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 
-// Instancia o cliente do Prisma
-const prisma = new PrismaClient({
-  adapter: process.env.DATABASE_URL,
-  // accelerateUrl: process.env.PRISMA_ACCELERATE_URL,
-});
+// Deixe o parêntese vazio. O Prisma se vira sozinho com o .env
+const prisma = new PrismaClient();
 
 module.exports = prisma;
