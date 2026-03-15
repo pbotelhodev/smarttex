@@ -3,7 +3,6 @@ generator client {
 }
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model Lead {
@@ -14,5 +13,54 @@ model Lead {
   phone     String
   budget    String
   message   String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+}
+
+model Visitors {
+  id            String    @id @default(uuid())
+  name      String
+  date      DateTime  @default(now())
+
+  @@map("Visitors")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique // 
+  full_name     String
+  company       String?   
+  document_id   String?    @unique
+  birth_date    DateTime?
+  phone         String?
+  password_hash String
+
+  //Controle de acesso
+  role          Role      @default(USER) 
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+
+  address Address?
+
+  
+  @@map("Users")
+}
+
+model Address {
+  id           String    @id @default(uuid())
+  id_user      String    @unique
+  user         User    @relation(fields: [id_user], references: [id])
+  zip_code     String?   
+  street       String?
+  number       String?
+  neighborhood String?
+  city         String?
+  state        String?
+  complement   String?
+
+  @@map("Addresses")
+}
+
+enum Role{
+  ADMIN
+  USER
 }

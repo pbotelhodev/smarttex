@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import {
   Code2,
   Cpu,
@@ -64,6 +65,49 @@ const App = () => {
       image: Vestibule,
       tech: ["React", "LocalStorage", "Auth"],
       href: "https://vestibule-plataform.vercel.app",
+    },
+  ];
+
+  const techs = [
+    {
+      name: "React",
+      desc: "SPA moderna e rápida",
+    },
+    {
+      name: "Tailwind",
+      desc: "UI consistente e ágil",
+    },
+    {
+      name: "Node.js",
+      desc: "Backend escalável e veloz",
+    },
+    {
+      name: "Express",
+      desc: "APIs simples e robustas",
+    },
+    {
+      name: "Prisma",
+      desc: "ORM para PostgreSQL",
+    },
+    {
+      name: "PostgreSQL",
+      desc: "Banco de dados confiável",
+    },
+    {
+      name: "Supabase",
+      desc: "Auth e realtime fácil",
+    },
+    {
+      name: "AWS",
+      desc: "Infraestrutura escalável cloud",
+    },
+    {
+      name: "Docker",
+      desc: "Ambientes isolados e portáveis",
+    },
+    {
+      name: "CI/CD",
+      desc: "Deploy automatizado contínuo",
     },
   ];
 
@@ -194,13 +238,13 @@ const App = () => {
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${
           isScrolled
-            ? "bg-[#0F1115]/90 border-white/5 backdrop-blur-md py-2 md:py-3 lg:py-3 2xl:py-4"
+            ? "bg-[#0F1115]/55 border-white/5 backdrop-blur-md py-2 md:py-3 lg:py-3 2xl:py-4"
             : "bg-transparent border-transparent py-3 md:py-5 lg:py-5 2xl:py-6"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-10 flex justify-between items-center">
           <div className="h-8 overflow-hidden flex items-center">
-            <a href="/" className="flex items-center gap-2">
+            <a href="#hero" className="flex items-center gap-2">
               <img
                 src={LogoSmarttex}
                 alt="Logo-Smarttex"
@@ -235,15 +279,18 @@ const App = () => {
               /projetos
             </a>
             <div className="h-4 w-px bg-white/10 mx-2" />
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors"
             >
               <Lock size={14} /> Área do Cliente
-            </a>
-            <button className="bg-white cursor-pointer text-black px-4 py-2 text-[11px] font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors border border-white">
+            </Link>
+            <a
+              href="#iniciar-projeto"
+              className="bg-white cursor-pointer text-black px-4 py-2 text-[11px] font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors border border-white"
+            >
               Iniciar Projeto
-            </button>
+            </a>
           </div>
 
           <button
@@ -261,7 +308,7 @@ const App = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
               <div className="flex flex-col gap-3 font-mono text-[12px]">
                 <a
-                  href="#stack"
+                  href="/stack"
                   onClick={() => setMobileMenuOpen(false)}
                   className=" font-mono py-2 text-slate-300 hover:text-white transition-colors"
                 >
@@ -306,9 +353,12 @@ const App = () => {
                   <Lock size={14} /> Área do Cliente
                 </a>
 
-                <button className="mt-2 bg-white text-black px-4 py-3 text-[11px] font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors border border-white">
+                <a
+                  href="#iniciar-projeto"
+                  className="mt-2 cursor-pointer bg-white text-black px-4 py-3 text-[11px] font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors border border-white"
+                >
                   Iniciar Projeto
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -316,7 +366,10 @@ const App = () => {
       </nav>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-[92vh] md:min-h-screen flex items-center justify-center pt-16 md:pt-20 lg:pt-22 2xl:pt-24 overflow-hidden">
+      <section
+        id="hero"
+        className="relative min-h-[92vh] md:min-h-screen flex items-center justify-center pt-16 md:pt-20 lg:pt-22 2xl:pt-24 overflow-hidden"
+      >
         <div className="absolute inset-0 bg-pillars opacity-60 pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 md:h-130 lg:h-140 2xl:h-155 bg-linear-radial from-slate-800/10 to-transparent pointer-events-none" />
 
@@ -342,22 +395,23 @@ const App = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-stretch sm:items-center">
-            <button className="w-full sm:w-auto bg-slate-100 hover:bg-slate-300 text-black px-6 sm:px-7 md:px-8 py-3.5 md:py-3.5 font-mono text-[11px] sm:text-[12px] md:text-sm font-bold uppercase tracking-widest transition-all border border-transparent">
+            <a
+              href="#iniciar-projeto"
+              className="w-full sm:w-auto bg-slate-100 hover:bg-slate-300 text-black px-6 sm:px-7 md:px-8 py-3.5 md:py-3.5 font-mono text-[11px] sm:text-[12px] md:text-sm font-bold uppercase tracking-widest transition-all border border-transparent"
+            >
               Iniciar Projeto
-            </button>
+            </a>
 
-            <button
-              onClick={() => {
-                location.hash = "#projetos";
-              }}
-              className="w-full sm:w-auto px-6 sm:px-7 md:px-8 py-3.5 md:py-3.5 font-mono text-[11px] sm:text-[12px] md:text-sm font-bold uppercase tracking-widest text-white border border-white/20 hover:bg-white/5 transition-all flex items-center justify-center gap-2 group"
+            <a
+              href="#projetos"
+              className="w-full cursor-pointer sm:w-auto px-6 sm:px-7 md:px-8 py-3.5 md:py-3.5 font-mono text-[11px] sm:text-[12px] md:text-sm font-bold uppercase tracking-widest text-white border border-white/20 hover:bg-white/5 transition-all flex items-center justify-center gap-2 group"
             >
               Casos reais
               <CodeXml
                 size={16}
                 className="group-hover:translate-x-1 transition-transform"
               />
-            </button>
+            </a>
           </div>
 
           <div className="mt-12 md:mt-16 lg:mt-16 2xl:mt-18 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7 lg:gap-8 border-t border-white/10 pt-7 md:pt-8 lg:pt-9 max-w-4xl lg:max-w-5xl 2xl:max-w-6xl mx-auto">
@@ -849,7 +903,10 @@ const App = () => {
       </section>
 
       {/* --- CONTACT & FOOTER --- */}
-      <footer className="bg-black border-t border-white/10 pt-12 md:pt-14 lg:pt-16 2xl:pt-18">
+      <footer
+        id="iniciar-projeto"
+        className="bg-black border-t border-white/10 pt-12 md:pt-14 lg:pt-16 2xl:pt-18"
+      >
         {/* CONTACT */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 2xl:px-10">
           <div className="text-center mb-8 md:mb-10 lg:mb-10">

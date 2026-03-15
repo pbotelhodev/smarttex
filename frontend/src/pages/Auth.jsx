@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Lock,
   Mail,
@@ -15,6 +16,14 @@ import {
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { register, handleSubmit } = useForm();
+
+  const handleLogin = (data) => {
+
+    alert(data.email + " - " + data.password + (data.fullName ? " - " + data.fullName : ""));
+
+  };
 
   return (
     <div className="min-h-dvh bg-[#0F1115] text-slate-300 font-grotesk flex flex-col selection:bg-indigo-500/30 overflow-hidden">
@@ -70,7 +79,7 @@ const App = () => {
 
             <form
               className="space-y-3.5 sm:space-y-2.5"
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handleSubmit(handleLogin)}
             >
               {/* Nome (Cadastro) */}
               {!isLogin && (
@@ -83,6 +92,7 @@ const App = () => {
                       <User size={14} />
                     </div>
                     <input
+                      {...register("fullName")}
                       type="text"
                       placeholder="Identificação"
                       className="w-full bg-[#050505] border border-white/5 text-white text-xs px-10 py-2.5 sm:py-3 focus:outline-none focus:border-[#BFA473]/30 focus:bg-[#0F1115] transition-all placeholder:text-slate-800 font-mono"
@@ -101,6 +111,7 @@ const App = () => {
                     <Mail size={14} />
                   </div>
                   <input
+                    {...register("email")}
                     type="email"
                     placeholder="seu@email.com"
                     className="w-full bg-[#050505] border border-white/5 text-white text-xs px-10 py-2.5 sm:py-3 focus:outline-none focus:border-[#BFA473]/30 focus:bg-[#0F1115] transition-all placeholder:text-slate-800 font-mono"
@@ -128,6 +139,7 @@ const App = () => {
                     <Lock size={14} />
                   </div>
                   <input
+                    {...register("password")}
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     className="w-full bg-[#050505] border border-white/5 text-white text-xs px-10 py-2.5 sm:py-3 focus:outline-none focus:border-[#BFA473]/30 focus:bg-[#0F1115] transition-all placeholder:text-slate-800 font-mono"
@@ -188,7 +200,6 @@ const App = () => {
         </div>
 
         {/* Branding Inferior (Agora em fluxo relativo em telas minúsculas para não sobrepor) */}
-        
       </main>
     </div>
   );

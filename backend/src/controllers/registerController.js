@@ -1,15 +1,15 @@
-const { sendContactEmail } = require("../services/emailServices");
+const { registerNewUser } = require("../services/registerServices"); //Use o mesmo nome da função exportada no service
 
-const handleContactForm = async (req, res) => {
+const handleRegisterForm = async (req, res) => {
   // O req.body é onde o React coloca as informações do formulário
   const dados = req.body;
 
   try {
     // Mandamos o serviço trabalhar e esperamos (await) ele terminar
-    await sendContactEmail(dados);
+    await registerNewUser(dados);
 
     // Se chegou aqui, deu certo. Respondemos status 200 (OK)
-    return res.status(200).json({ message: "E-mail enviado com sucesso!" });
+    return res.status(201).json({ message: "Usuário registrado com sucesso!" });
   } catch (error) {
     // Se o serviço falhar (ex: senha errada no .env), caímos aqui
     console.error("Erro no Controller:", error);
@@ -17,12 +17,11 @@ const handleContactForm = async (req, res) => {
     // Respondemos status 500 (Erro Interno do Servidor)
     return res
       .status(500)
-      .json({ error: "Não foi possível enviar sua mensagem." });
+      .json({ error: "Não foi possível registrar o usuário." });
   }
 };
 
-module.exports = { handleContactForm };
-
+module.exports = { handleRegisterForm };
 
 // 200 - OK: A requisição foi bem-sucedida e o servidor retornou os dados solicitados.
 // 201 - Created: A requisição foi bem-sucedida e um novo recurso foi criado como resultado.
