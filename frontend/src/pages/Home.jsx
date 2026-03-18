@@ -904,12 +904,12 @@ const App = () => {
               </p>
             </div>
 
-            <a
-              href="#"
+            <Link
+              to="/portfolio"
               className="hidden md:inline-flex items-center gap-2 font-mono text-sm text-slate-400 hover:text-white transition-colors"
             >
               Ver portfólio completo <ArrowRight size={16} />
-            </a>
+            </Link>
           </div>
 
           <div className="relative">
@@ -1167,15 +1167,15 @@ const App = () => {
                       </a>
                     </li>
 
-                    {/* ✅ Admin camuflado */}
+                    {/* Admin camuflado */}
                     <li>
-                      <a
-                        href="#admin"
+                      <Link
+                        to="/smtx-entry"
                         aria-label="Admin"
                         className="text-slate-900/20 hover:text-slate-400 transition-colors select-none"
                       >
                         Admin
-                      </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>

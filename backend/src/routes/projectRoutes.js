@@ -1,0 +1,11 @@
+// primeiro chamamos o express, que é o framework que usamos para criar o servidor
+const express = require("express");
+// depois criamos uma instância do router do express, que é o que usamos para definir as rotas da nossa API
+const router = express.Router();
+// importamos a função que vai lidar com o formulário de contato, que criamos no controller
+const { projectController } = require("../controllers/projectController"); //Use o mesmo nome da função exportada no controller
+
+// definimos a rota POST para /login, que vai chamar a função projectController quando receber uma requisição
+router.get("/projects", projectController);
+
+module.exports = router;
