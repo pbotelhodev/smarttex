@@ -140,10 +140,11 @@ const App = () => {
   const inputRef = useRef(null);
 
   // -- FUNÇÕES ---
+  const baseURL = import.meta.env.URL_NGROK || "http://localhost:5000";
 
   const handleLogVisitor = async (name) => {
     setIsLoading(true);
-    const endpoint = "http://localhost:5000/api/visitor";
+    const endpoint = `${baseURL}/api/visitor`;
     const payload = { username: name };
 
     //Fazemos a requisição pro backend
@@ -161,7 +162,7 @@ const App = () => {
 
   const handleContact = async (data) => {
     try {
-      const response = await fetch("http://localhost:5000/api/contato", {
+      const response = await fetch(`${baseURL}/api/contato`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

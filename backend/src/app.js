@@ -8,6 +8,7 @@ const loginRoutes = require('./routes/loginRoutes');
 const visitorRoutes = require('./routes/visitorRoutes')
 
 const app = express();
+app.set("trust proxy", true);
 
 app.use(cors());
 app.use(express.json());

@@ -30,6 +30,10 @@ const App = () => {
 
   const { register, handleSubmit } = useForm();
 
+  const baseURL = import.meta.env.URL_NGROK || "http://localhost:5000";
+
+  // Handles
+
   const handleAlert = (type, message) => {
     setTypeAlert(type);
     setMessageAlert(message);
@@ -40,8 +44,8 @@ const App = () => {
     setIsLoading(true);
     //primeiro vericamos onde esta o endpoint correto, se é login ou cadastro
     const endpoint = isLogin
-      ? "http://localhost:5000/api/login"
-      : "http://localhost:5000/api/register";
+      ? `${baseURL}/api/login`
+      : `${baseURL}/api/register`;
 
     //decidimos quais dados coletar com base na ação (login ou cadastro)
     const payload = isLogin
