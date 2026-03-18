@@ -140,7 +140,7 @@ const App = () => {
   const inputRef = useRef(null);
 
   // -- FUNÇÕES ---
-  const baseURL = import.meta.env.URL_NGROK || "http://localhost:5000";
+  const baseURL = import.meta.env.VITE_URL_NGROK || "http://localhost:5000";
 
   const handleLogVisitor = async (name) => {
     setIsLoading(true);
@@ -150,7 +150,12 @@ const App = () => {
     //Fazemos a requisição pro backend
     try {
       //O axios dispara o post
-      const response = await axios.post(endpoint, payload);
+      const response = await axios.post(endpoint, payload, {
+        headers: {
+          // Este cabeçalho "pula" a página de aviso do ngrok
+          "ngrok-skip-browser-warning": "69420",
+        },
+      });
 
       console.log(response.data.message);
     } catch (error) {
