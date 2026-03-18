@@ -1,27 +1,32 @@
-const { registerService } = require("../services/registerServices"); //Use o mesmo nome da função exportada no service
+const { loginService } = require("../services/loginServices"); //Use o mesmo nome da função exportada no service
 
-const registerController = async (req, res) => {
+const loginController = async (req, res) => {
   // O req.body é onde o React coloca as informações do formulário
   const dados = req.body;
 
   try {
     // Mandamos o serviço trabalhar e esperamos (await) ele terminar
-    await registerService(dados);
+    const user = await loginService(dados);
 
-    // Se chegou aqui, deu certo. Respondemos status 201 (OK)
-    return res.status(201).json({ message: "Usuário registrado com sucesso!" });
+    // Se chegou aqui, deu certo. Respondemos status 200 (OK)
+    return res.status(200).json({ message: "Login realizado com sucesso!", user });
+
   } catch (error) {
     // Se o serviço falhar (ex: senha errada no .env), caímos aqui
-    console.error("Erro no Controller:", error);
+    console.error(error.message);
+
+    const statusCode = error.status || 500; // Usa o status do erro ou 500 se não tiver
 
     // Respondemos status 500 (Erro Interno do Servidor)
     return res
-      .status(500)
-      .json({ error: "Não foi possível registrar o usuário." });
+      .status(statusCode)
+      .json( { message: error.message || "Ocorreu um erro ao processar o login." } );
   }
+
+
 };
 
-module.exports = { registerController };
+module.exports = { loginController };
 
 // 200 - OK: A requisição foi bem-sucedida e o servidor retornou os dados solicitados.
 // 201 - Created: A requisição foi bem-sucedida e um novo recurso foi criado como resultado.

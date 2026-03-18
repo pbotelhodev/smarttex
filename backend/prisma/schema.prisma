@@ -8,20 +8,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model Lead {
-  id        String   @id @default(uuid())
+  id        String        @id @default(uuid())
   name      String
   company   String
   email     String
   phone     String
   budget    String
   message   String
-  createdAt DateTime  @default(now())
+  createdAt DateTime      @default(now())
 }
 
 model Visitors {
   id            String    @id @default(uuid())
   name      String
-  date      DateTime  @default(now())
+  date      DateTime      @default(now())
 
   @@map("Visitors")
 }
@@ -30,10 +30,10 @@ model User {
   id            String    @id @default(uuid())
   email         String    @unique // 
   full_name     String
-  company       String?   
-  document_id   String?    @unique
+  company       String    @default("")
+  document_id   String?    @unique 
   birth_date    DateTime?
-  phone         String?
+  phone         String    @default("")
   password_hash String
 
   //Controle de acesso
@@ -51,13 +51,13 @@ model Address {
   id           String    @id @default(uuid())
   id_user      String    @unique
   user         User    @relation(fields: [id_user], references: [id])
-  zip_code     String?   
-  street       String?
-  number       String?
-  neighborhood String?
-  city         String?
-  state        String?
-  complement   String?
+  zip_code     String  @default("")   
+  street       String  @default("")
+  number       String  @default("")
+  neighborhood String  @default("")
+  city         String  @default("")
+  state        String  @default("")
+  complement   String  @default("")
 
   @@map("Addresses")
 }

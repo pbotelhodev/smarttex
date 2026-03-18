@@ -123,3 +123,24 @@ h6 {
   scrollbar-width: thin;
   scrollbar-color: #ffffff #0f1115;
 }
+
+/* ===== Animations ===== */
+
+@keyframes dropDown {
+  0% {
+    opacity: 0;
+    /* Começa no meio (-50% X) e 100 pixels ACIMA da posição original no eixo Y */
+    transform: translate(-50%, -100px); 
+  }
+  100% {
+    opacity: 1;
+    /* Termina no meio (-50% X) e cravado na posição original (0 Y) */
+    transform: translate(-50%, 0); 
+  }
+}
+
+/* Cria a classe utilitária para o Tailwind consumir */
+.animate-drop-down {
+  /* 0.4s de duração com cubic-bezier para um efeito de desaceleração suave (friction) */
+  animation: dropDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

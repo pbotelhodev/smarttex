@@ -68,7 +68,7 @@ const App = () => {
     },
   ];
 
-  const techs = [
+  /* const techs = [
     {
       name: "React",
       desc: "SPA moderna e rápida",
@@ -109,7 +109,7 @@ const App = () => {
       name: "CI/CD",
       desc: "Deploy automatizado contínuo",
     },
-  ];
+  ]; */
 
   // --- ESTADOS ---
   const [showIntro, setShowIntro] = useState(true);
@@ -132,6 +132,10 @@ const App = () => {
   const { register, handleSubmit, reset } = useForm();
 
   // -- FUNÇÕES ---
+
+  const handleLogVisitor = (data) => {
+    console.log("Dados do visitante:", data);
+  }
 
   const handleContact = async (data) => {
     try {
@@ -915,7 +919,7 @@ const App = () => {
             </h2>
 
             <p className="text-slate-400 text-sm sm:text-base md:text-sm lg:text-base max-w-2xl mx-auto">
-              Entre em contato para discutir o seu {""}
+              Entre em contato para discutir-mos o seu {""}
               <span className="text-white font-bold border-b border-white/30">
                 projeto
               </span>

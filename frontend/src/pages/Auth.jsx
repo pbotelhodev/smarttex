@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+
+import axios from "axios";
+
 import {
   Lock,
   Mail,
@@ -13,16 +17,76 @@ import {
   Cpu,
 } from "lucide-react";
 
+import Loader from "../components/Loader";
+import Alert from "../components/Alert";
+
 const App = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [typeAlert, setTypeAlert] = useState("");
+  const [messageAlert, setMessageAlert] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit } = useForm();
 
-  const handleLogin = (data) => {
+  const handleAlert = (type, message) => {
+    setTypeAlert(type);
+    setMessageAlert(message);
+    setIsAlertVisible(true);
+  };
 
-    alert(data.email + " - " + data.password_hash + (data.full_name ? " - " + data.full_name : ""));
+  const handleAuth = async (data) => {
+    setIsLoading(true);
+    //primeiro vericamos onde esta o endpoint correto, se é login ou cadastro
+    const endpoint = isLogin
+      ? "http://localhost:5000/api/login"
+      : "http://localhost:5000/api/register";
 
+    //decidimos quais dados coletar com base na ação (login ou cadastro)
+    const payload = isLogin
+      ? { email: data.email, password_hash: data.password_hash }
+      : {
+          full_name: data.full_name,
+          email: data.email,
+          password_hash: data.password_hash,
+        };
+
+    //enviamos a requisição para o backend
+    try {
+      //o axios dispara o post
+      const response = await axios.post(endpoint, payload);
+
+      if (!isLogin) {
+        //Aqui verifica se é o login ou register(Sendo o register/Cadastro do usuário)
+        console.log(response.data.message);
+        setIsLogin(true);
+        handleAlert(
+          "success",
+          "Usuário cadastrado com sucesso! Faça login para acessar a área do cliente.",
+        );
+      } else {
+        //Aqui verifica se é o login ou register(Sendo o login do usuário)
+        console.log(response.data.message);
+        console.log(response.data.user);
+        handleAlert(
+          "success",
+          `Login bem-sucedido, Seja bem-vindo ${response.data.user.full_name}!` ,
+        );
+      }
+    } catch (error) {
+      //aqui tratamos erros de requisição, como falha de rede ou resposta inesperada
+      if (error.response) {
+        handleAlert("error", error.response.data.message);
+        console.log(error.response.data);
+      } else if (error.request) {
+        console.error("Falha da rede ou CORS:", error.message);
+        handleAlert("error", error.message);
+      }
+    } finally {
+      //aqui garantimos que o loader seja escondido após a resposta, seja sucesso ou erro
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,7 +143,7 @@ const App = () => {
 
             <form
               className="space-y-3.5 sm:space-y-2.5"
-              onSubmit={handleSubmit(handleLogin)}
+              onSubmit={handleSubmit(handleAuth)}
             >
               {/* Nome (Cadastro) */}
               {!isLogin && (
@@ -198,9 +262,23 @@ const App = () => {
             </div>
           </div>
         </div>
-
-        {/* Branding Inferior (Agora em fluxo relativo em telas minúsculas para não sobrepor) */}
       </main>
+      <div>
+        {isLoading && (
+          <>
+            <Loader />
+          </>
+        )}
+      </div>
+      <div>
+        {isAlertVisible && (
+          <Alert
+            type={typeAlert}
+            message={messageAlert}
+            onClose={() => setIsAlertVisible(false)}
+          />
+        )}
+      </div>
     </div>
   );
 };
