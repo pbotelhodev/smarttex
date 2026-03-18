@@ -5,6 +5,7 @@ const cors = require ("cors");
 const contactRoutes = require('./routes/contactRoutes');
 const registerRoutes = require('./routes/registerRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const visitorRoutes = require('./routes/visitorRoutes')
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api", contactRoutes);
 app.use("/api", registerRoutes);
 app.use("/api", loginRoutes);
+app.use("/api", visitorRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", service: "Backend smarttex ativo 🟢" });

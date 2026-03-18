@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+
+import axios from "axios";
+
 import {
   Code2,
   Cpu,
@@ -35,6 +38,9 @@ import Memora from "../assets/memora.png";
 import TiJ from "../assets/tij.png";
 import Vestibule from "../assets/vestibule.png";
 
+//import components
+import Loader from "../components/Loader";
+import Alert from "../components/Alert";
 import ProjectCard from "../components/ProjectCard";
 import TimelineStepCompact from "../components/TimelineStepCompact";
 import InputGroup from "../components/InputGroup";
@@ -114,6 +120,9 @@ const App = () => {
   // --- ESTADOS ---
   const [showIntro, setShowIntro] = useState(true);
   const [isReturn, setIsReturn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [visitorName, setVisitorName] = useState(() => {
     const name = localStorage.getItem("visitorName") || "";
 
@@ -124,18 +133,31 @@ const App = () => {
     return name;
   });
 
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const inputRef = useRef(null);
-
+  // chamada do UseForm
   const { register, handleSubmit, reset } = useForm();
+
+  // referência para o input da tela de introdução
+  const inputRef = useRef(null);
 
   // -- FUNÇÕES ---
 
-  const handleLogVisitor = (data) => {
-    console.log("Dados do visitante:", data);
-  }
+  const handleLogVisitor = async (name) => {
+    setIsLoading(true);
+    const endpoint = "http://localhost:5000/api/visitor";
+    const payload = { username: name };
+
+    //Fazemos a requisição pro backend
+    try {
+      //O axios dispara o post
+      const response = await axios.post(endpoint, payload);
+
+      console.log(response.data.message);
+    } catch (error) {
+      console.error("Falha de rede: ", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleContact = async (data) => {
     try {
@@ -158,6 +180,15 @@ const App = () => {
     }
   };
 
+  const handleEnterSite = (e) => {
+    e.preventDefault();
+    if (visitorName.trim().length > 0) {
+      setShowIntro(false);
+      window.scrollTo(0, 0);
+      localStorage.setItem("visitorName", visitorName.trim());
+      handleLogVisitor(visitorName);
+    }
+  };
   // --- EFEITOS ---
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -168,16 +199,6 @@ const App = () => {
   useEffect(() => {
     if (showIntro && inputRef.current) inputRef.current.focus();
   }, [showIntro]);
-
-  // --- HANDLERS ---
-  const handleEnterSite = (e) => {
-    e.preventDefault();
-    if (visitorName.trim().length > 0) {
-      setShowIntro(false);
-      window.scrollTo(0, 0);
-      localStorage.setItem("visitorName", visitorName.trim());
-    }
-  };
 
   // =================================================================
   // 1. TELA DE INTRO
@@ -228,6 +249,13 @@ const App = () => {
           <p className="mt-5 text-slate-400 text-[10px] font-mono uppercase tracking-widest">
             Tecnologia que transforma negócios.
           </p>
+        </div>
+        <div>
+          {isLoading && (
+            <>
+              <Loader />
+            </>
+          )}
         </div>
       </div>
     );
@@ -1235,6 +1263,13 @@ const App = () => {
           </div>
         </div>
       </footer>
+      <div>
+        {isLoading && (
+          <>
+            <Loader />
+          </>
+        )}
+      </div>
     </div>
   );
 };

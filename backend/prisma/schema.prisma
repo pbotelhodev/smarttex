@@ -18,14 +18,6 @@ model Lead {
   createdAt DateTime      @default(now())
 }
 
-model Visitors {
-  id            String    @id @default(uuid())
-  name      String
-  date      DateTime      @default(now())
-
-  @@map("Visitors")
-}
-
 model User {
   id            String    @id @default(uuid())
   email         String    @unique // 
@@ -60,6 +52,14 @@ model Address {
   complement   String  @default("")
 
   @@map("Addresses")
+}
+
+model VisitorLog {
+  id         String   @id @default(uuid())
+  username   String?  @default("Novo usuário") // O nome que ele digitou ao entrar
+  ipAddress  String?
+  userAgent  String?  // Aqui você extrai se é Mobile/Desktop para o ícone
+  createdAt  DateTime @default(now())
 }
 
 enum Role{
