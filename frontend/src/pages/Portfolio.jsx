@@ -8,12 +8,6 @@ import axios from "axios";
 //import de componentes
 import ProjectCard from "../components/ProjectCard";
 import Loader from "../components/Loader";
-import Alert from "../components/Alert";
-
-//import images
-import Memora from "../assets/memora.png";
-import TiJ from "../assets/tij.png";
-import Vestibule from "../assets/vestibule.png";
 
 const Portfolio = () => {
   //States
