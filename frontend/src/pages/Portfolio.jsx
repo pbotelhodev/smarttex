@@ -46,15 +46,13 @@ const Portfolio = () => {
 ]; */
 
   //Effects
-  const baseURL = import.meta.env.VITE_URL_NGROK || "http://localhost:5000";
+  const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
     const fetchProjects = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(`${baseURL}/api/projects`, {
-          headers: { "ngrok-skip-browser-warning": "69420" },
-        });
+        const response = await axios.get(`${baseURL}/api/projects`);
         setProjects(response.data);
         console.log(projects);
       } catch (error) {
