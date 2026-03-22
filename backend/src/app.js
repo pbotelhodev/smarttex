@@ -15,8 +15,8 @@ app.set("trust proxy", true);
 app.use(cors());
 app.use(express.json());
 app.use(
-  "/projectFiles",
-  express.static(path.join(__dirname, "../projectFiles")),
+  "/uploads",
+  express.static(path.join(__dirname, "../uploads")),
 );
 
 //Rotas
@@ -27,7 +27,7 @@ app.use("/api", visitorRoutes);
 app.use("/api", projectRoutes);
 
 app.get("/api/health", (req, res) => {
-  res.json({ status: "ok", service: "Backend smarttex ativo 🟢" });
+  res.json({ status: "ok", service: "Server smarttex ativo 🟢" });
 });
 
 module.exports = app;

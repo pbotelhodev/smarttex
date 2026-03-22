@@ -15,29 +15,6 @@ const Portfolio = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState([]);
 
-  /* const projects = [
-  {
-    title: "Memora",
-    category: "SaaS",
-    image: Memora,
-    tech: ["React", "Tailwind", "Social Media"],
-    href: "https://www.appmemora.com.br",
-  },
-  {
-    title: "TeodoroiJacobina",
-    category: "Landing Page",
-    image: TiJ,
-    tech: ["React", "Tailwind", "Whatsapp API"],
-    href: "https://teodoroijacobina.vercel.app",
-  },
-  {
-    title: "Vestibule",
-    category: "EdTech",
-    image: Vestibule,
-    tech: ["React", "LocalStorage", "Auth"],
-    href: "https://vestibule-plataform.vercel.app",
-  },
-]; */
 
   //Effects
   const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -48,13 +25,15 @@ const Portfolio = () => {
       try {
         const response = await axios.get(`${baseURL}/api/projects`);
         setProjects(response.data);
-        console.log(projects);
+
+        console.log("RESPONSE COMPLETA:", response);
       } catch (error) {
         console.error("Erro ao carregar os projetos: ", error.message);
       } finally {
         setIsLoading(false);
       }
     };
+
     fetchProjects();
   }, []);
 
@@ -88,30 +67,29 @@ const Portfolio = () => {
             / EXECUTION_LOG
           </span>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            Sistemas em{" "}
+            Deploys{" "}
             <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-blue-500">
-              Operação.
+              Ativos.
             </span>
           </h1>
-          <p className="max-w-2xl text-slate-400 text-sm md:text-base leading-relaxed">
+          <p className="max-w-3xl text-slate-400 text-sm md:text-base leading-relaxed">
             Projetos construídos para cenários reais, com foco em estabilidade,
-            performance e continuidade operacional. Catálogo completo da nossa
-            infraestrutura.
+            performance e continuidade operacional.
           </p>
         </header>
 
         <div className="relative">
           <div className="absolute inset-0 -mx-4 sm:-mx-6 lg:-mx-8 2xl:-mx-10 bg-linear-to-b from-white/2 via-transparent to-white/2" />
-
           <div className="relative grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {projects.map((p) => (
               <ProjectCard
                 key={p.id}
-                title={p.title}
+                title={p.projectName}
                 category={p.category}
-                image={p.image}
+                image={p.imageUrl}
                 tech={p.tech}
                 link={p.href}
+               
               />
             ))}
           </div>

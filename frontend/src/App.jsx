@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Auth";
 import Admin from "./pages/Admin";
 import Portfolio from "./pages/Portfolio";
+import ProjectView from "./pages/ProjectView";
 
 function App() {
   return (
@@ -18,7 +19,10 @@ function App() {
       <Route path="/login" element={<Login />} />
 
       {/* Rota Portfolio */}
-      <Route path="/portfolio" element={<Portfolio/>} />
+      <Route path="/portfolio" element={<Portfolio />} />
+
+      {/* Rota de visualização dos projetos */}
+      <Route path="/portfolio/projetos" element={<ProjectView />} />
     </Routes>
   );
 }

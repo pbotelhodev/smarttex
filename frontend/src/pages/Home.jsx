@@ -34,9 +34,6 @@ import {
 
 //import images
 import LogoSmarttex from "../assets/logo.png";
-import Memora from "../assets/memora.png";
-import TiJ from "../assets/tij.png";
-import Vestibule from "../assets/vestibule.png";
 
 //import components
 import Loader from "../components/Loader";
@@ -50,29 +47,6 @@ import StackListItem from "../components/StackListItem";
 import StatItem from "../components/StatItem";
 
 const App = () => {
-  const projects = [
-    {
-      title: "Memora",
-      category: "SaaS",
-      image: Memora,
-      tech: ["React", "Tailwind", "Social Media"],
-      href: "https://www.appmemora.com.br",
-    },
-    {
-      title: "TeodoroiJacobina",
-      category: "Landing Page",
-      image: TiJ,
-      tech: ["React", "Tailwind", "Whatsapp API"],
-      href: "https://teodoroijacobina.vercel.app",
-    },
-    {
-      title: "Vestibule",
-      category: "EdTech",
-      image: Vestibule,
-      tech: ["React", "LocalStorage", "Auth"],
-      href: "https://vestibule-plataform.vercel.app",
-    },
-  ];
 
   /* const techs = [
     {
@@ -132,6 +106,7 @@ const App = () => {
     }
     return name;
   });
+  const [projects, setProjects] = useState([])
 
   // chamada do UseForm
   const { register, handleSubmit, reset } = useForm();
@@ -190,7 +165,9 @@ const App = () => {
       handleLogVisitor(visitorName);
     }
   };
+
   // --- EFEITOS ---
+  //Efeito para 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -201,6 +178,23 @@ const App = () => {
     if (showIntro && inputRef.current) inputRef.current.focus();
   }, [showIntro]);
 
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${baseURL}/api/projects`);
+        setProjects(response.data);
+
+        console.log("RESPONSE COMPLETA:", response);
+      } catch (error) {
+        console.error("Erro ao carregar os projetos: ", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
   // =================================================================
   // 1. TELA DE INTRO
   // =================================================================
@@ -913,10 +907,10 @@ const App = () => {
             <div className="relative grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {projects.map((p) => (
                 <ProjectCard
-                  key={p.title}
-                  title={p.title}
+                  key={p.id}
+                  title={p.projectName}
                   category={p.category}
-                  image={p.image}
+                  image={p.imageUrl}
                   tech={p.tech}
                   link={p.href}
                 />
