@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import {
   ChevronLeft,
   ArrowUpRight,
@@ -9,8 +10,8 @@ import {
 } from "lucide-react";
 
 const ProjectView = () => {
-  // Em produção, substitua este estado pelo hook de rotas (ex: useParams() do react-router ou params do Next.js)
-  const [currentSlug, setCurrentSlug] = useState("");
+  //Recebe o Slug
+  const { slug } = useParams();
 
   // Estado inicial provisório para a tela não dar 404 enquanto o teu DB não responde
   const [project, setProject] = useState({
@@ -141,7 +142,6 @@ const ProjectView = () => {
             </div>
 
             {/* Metadados Extras Simulados */}
-            
           </div>
 
           {/* =========================================
@@ -197,7 +197,7 @@ const ProjectView = () => {
             </div>
           </div>
         </div>
-      </main> 
+      </main>
     </div>
   );
 };

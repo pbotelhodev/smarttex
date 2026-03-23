@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 
-const ProjectCard = ({ title, category, image, tech, link }) => (
+const ProjectCard = ({ title, category, image, tech, slug }) => (
   <div className="group relative overflow-hidden border border-white/10 bg-[#14181F]">
     <div className="absolute inset-0 bg-linear-to-t from-[#0A0C10] via-transparent to-transparent opacity-90 z-10" />
     <img
@@ -9,7 +9,7 @@ const ProjectCard = ({ title, category, image, tech, link }) => (
       className="w-full h-72 md:h-80 object-cover opacity-60 group-hover:opacity-90 transition-opacity grayscale-30 hover:grayscale-0 duration-300"
     />
     <div className="absolute bottom-0 left-0 p-7 z-20 w-full">
-      <div className="flex justify-between items-end" onClick={() => window.open(link, "_blank")}>
+      <div className="flex justify-between items-end" onClick={slug}>
         <div>
           <span className="font-mono text-indigo-300 text-xs uppercase mb-2 block">
             {category}
@@ -30,4 +30,4 @@ const ProjectCard = ({ title, category, image, tech, link }) => (
     </div>
   </div>
 );
- export default ProjectCard;
+export default ProjectCard;

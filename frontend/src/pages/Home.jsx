@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -47,6 +47,7 @@ import StackListItem from "../components/StackListItem";
 import StatItem from "../components/StatItem";
 
 const App = () => {
+  const navigate = useNavigate();
 
   /* const techs = [
     {
@@ -106,7 +107,7 @@ const App = () => {
     }
     return name;
   });
-  const [projects, setProjects] = useState([])
+  const [projects, setProjects] = useState([]);
 
   // chamada do UseForm
   const { register, handleSubmit, reset } = useForm();
@@ -167,7 +168,7 @@ const App = () => {
   };
 
   // --- EFEITOS ---
-  //Efeito para 
+  //Efeito para
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
@@ -185,7 +186,7 @@ const App = () => {
         const response = await axios.get(`${baseURL}/api/projects`);
         setProjects(response.data);
 
-        console.log("RESPONSE COMPLETA:", response);
+        console.log(projects)
       } catch (error) {
         console.error("Erro ao carregar os projetos: ", error.message);
       } finally {
@@ -905,26 +906,30 @@ const App = () => {
             <div className="absolute inset-0 -mx-4 sm:-mx-6 lg:-mx-8 2xl:-mx-10 bg-linear-to-b from-white/2 via-transparent to-white/2" />
 
             <div className="relative grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {projects.map((p) => (
-                <ProjectCard
-                  key={p.id}
-                  title={p.projectName}
-                  category={p.category}
-                  image={p.imageUrl}
-                  tech={p.tech}
-                  link={p.href}
-                />
-              ))}
+              {projects
+                .filter((p) => p.highlight)
+                .map((p) => (
+                  <ProjectCard
+                    key={p.id}
+                    title={p.projectName}
+                    category={p.category}
+                    image={p.imageUrl}
+                    tech={p.tech}
+                    slug={() => navigate(`/projetos/${p.slug}`)}
+                  />
+                ))}
             </div>
           </div>
 
+          {/*  */}
+
           <div className="mt-10 md:hidden">
-            <a
-              href="#"
+            <Link
+              to="/portfolio"
               className="inline-flex items-center gap-2 font-mono text-sm text-slate-400 hover:text-white transition-colors"
             >
               Ver portfólio completo <ArrowRight size={16} />
-            </a>
+            </Link>
           </div>
         </div>
       </section>

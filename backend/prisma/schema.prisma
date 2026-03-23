@@ -68,8 +68,10 @@ model Project {
   category    String
   tech        String[]
   href        String
+  highlight   Boolean @default(false)
+  slug        String  @default("pendente")
   imageUrl    String?
-  createdAt    DateTime @default(now())
+  createdAt   DateTime @default(now())
   updateAt    DateTime @updatedAt
 
   @@map("Projects")

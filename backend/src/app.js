@@ -14,10 +14,7 @@ app.set("trust proxy", true);
 
 app.use(cors());
 app.use(express.json());
-app.use(
-  "/uploads",
-  express.static(path.join(__dirname, "../uploads")),
-);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 //Rotas
 app.use("/api", contactRoutes);

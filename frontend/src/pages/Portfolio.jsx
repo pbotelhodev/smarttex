@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //Import Axios
 import axios from "axios";
@@ -11,10 +12,11 @@ import Loader from "../components/Loader";
 
 const Portfolio = () => {
   //States
-
   const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState([]);
 
+  //Navigate
+  const navigate = useNavigate();
 
   //Effects
   const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -88,8 +90,7 @@ const Portfolio = () => {
                 category={p.category}
                 image={p.imageUrl}
                 tech={p.tech}
-                link={p.href}
-               
+                slug={() => navigate(`/projetos/${p.slug}`)}
               />
             ))}
           </div>

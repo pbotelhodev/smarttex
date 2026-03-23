@@ -1,14 +1,12 @@
 const { projectService } = require("../services/projectServices"); //Use o mesmo nome da função exportada no service
 
 const projectController = async (req, res) => {
-
   try {
     // Mandamos o serviço trabalhar e esperamos (await) ele terminar
     const projects = await projectService();
 
     // Se chegou aqui, deu certo. Respondemos status 200 (OK)
     return res.status(200).json(projects);
-
   } catch (error) {
     // Se o serviço falhar (ex: senha errada no .env), caímos aqui
     console.error(error.message);
@@ -16,12 +14,10 @@ const projectController = async (req, res) => {
     const statusCode = error.status || 404; // Usa o status do erro ou 500 se não tiver
 
     // Respondemos status 500 (Erro Interno do Servidor)
-    return res
-      .status(statusCode)
-      .json( { message: error.message || "Ocorreu um erro ao rerquisitar os projetos." } );
+    return res.status(statusCode).json({
+      message: error.message || "Ocorreu um erro ao rerquisitar os projetos.",
+    });
   }
-
-
 };
 
 module.exports = { projectController };
