@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ChevronLeft, ArrowUpRight, Code2, AlertOctagon } from "lucide-react";
@@ -41,6 +41,25 @@ const ProjectView = () => {
     };
 
     fetchProjects();
+  }, []);
+
+  // 1. Criamos a referência e o estado da escala
+  const containerRef = useRef(null);
+  const [scale, setScale] = useState(1);
+
+  // 2. O React calcula a matemática exata de encolhimento
+  useEffect(() => {
+    const updateScale = () => {
+      if (containerRef.current) {
+        // Pega a largura real da sua div na tela e divide por 1440 (monitor PC)
+        const containerWidth = containerRef.current.offsetWidth;
+        setScale(containerWidth / 1440);
+      }
+    };
+
+    updateScale(); // Roda na hora que abre
+    window.addEventListener("resize", updateScale); // Atualiza se redimensionar a tela
+    return () => window.removeEventListener("resize", updateScale);
   }, []);
 
   // Normalizador de dados para a Stack Tecnológica (Defesa contra retornos inconsistentes do DB)
@@ -112,7 +131,7 @@ const ProjectView = () => {
       </nav>
 
       {/* PROJECT VIEW CONTAINER */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 relative">
         {/* Background Radial */}
         <div className="absolute top-0 right-0 w-125 h-125 bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -120,7 +139,7 @@ const ProjectView = () => {
           {/* =========================================
               LEFT COLUMN: BLOCO DE INFORMAÇÕES
           ========================================= */}
-          <div className="lg:col-span-4 xl:col-span-4 flex flex-col gap-8 animate-in fade-in slide-in-from-left-4 duration-700">
+          <div className="lg:col-span-4 xl:col-span-5 flex flex-col gap-8 animate-in fade-in slide-in-from-left-4 duration-700">
             <header>
               <div className="flex items-center gap-3 mb-4">
                 <span className="font-mono text-[9px] text-[#BFA473] uppercase tracking-[0.3em] font-bold border border-[#BFA473]/30 px-2 py-1 bg-[#BFA473]/10">
@@ -141,8 +160,8 @@ const ProjectView = () => {
             </header>
 
             {/* Tech Stack */}
-            <div className="border-t border-white/10 pt-6">
-              <div className="flex items-center gap-2 mb-4 text-slate-500 font-mono text-[10px] uppercase tracking-widest">
+            <div className="border-t border-white/10 pt-4">
+              <div className="flex items-center gap-2 mb-2 text-slate-500 font-mono text-[10px] uppercase tracking-widest">
                 <Code2 size={14} />
                 <span>Stack Tecnológico</span>
               </div>
@@ -189,7 +208,7 @@ const ProjectView = () => {
           {/* =========================================
               RIGHT COLUMN: BLOCO DE INTERAÇÃO (IFRAME)
           ========================================= */}
-          <div className="lg:col-span-8 xl:col-span-8 flex flex-col gap-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-150">
+          <div className="lg:col-span-8 xl:col-span-7 flex flex-col gap-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-150">
             <div className="w-full bg-[#0A0C10] border border-white/10 p-2 sm:p-3 relative group flex flex-col">
               {/* Fake Browser Header */}
               <div className="flex items-center bg-[#050505] border border-white/5 rounded-t-md px-4 py-2 mb-2">
@@ -203,11 +222,19 @@ const ProjectView = () => {
                 </div>
               </div>
 
-              <div className="relative w-full h-125 lg:h-90 overflow-hidden border border-white/5 bg-white rounded-b-sm">
+              <div
+                ref={containerRef}
+                className="relative w-full aspect-video overflow-hidden border border-white/5 bg-[#0F1115] rounded-b-sm"
+              >
                 <iframe
                   src={project.href}
-                  title={`Preview interativo do projeto ${project.projectName}`}
-                  className="w-full h-full border-none"
+                  title={`Preview interativo do projeto`}
+                  className="absolute top-0 left-0 border-none origin-top-left"
+                  style={{
+                    width: "1440px",
+                    height: "810px",
+                    transform: `scale(${scale})`, // Aplica o cálculo exato do React
+                  }}
                   sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 />
               </div>
@@ -222,6 +249,6 @@ const ProjectView = () => {
       )}
     </div>
   );
-};
+};;
 
 export default ProjectView;
