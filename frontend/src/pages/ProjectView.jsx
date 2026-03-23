@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  ChevronLeft,
-  ArrowUpRight,
-  ShieldCheck,
-  Layers,
-  Code2,
-  AlertOctagon,
-} from "lucide-react";
+import axios from "axios";
+import { ChevronLeft, ArrowUpRight, Code2, AlertOctagon } from "lucide-react";
+
+import Loader from "../components/Loader";
 
 const ProjectView = () => {
+  const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   //Recebe o Slug
   const { slug } = useParams();
 
-  // Estado inicial provisório para a tela não dar 404 enquanto o teu DB não responde
+  const [isLoading, setIsLoading] = useState(false);
   const [project, setProject] = useState({
     id: "---",
     projectName: "Aguardando Banco de Dados",
@@ -24,6 +22,26 @@ const ProjectView = () => {
     imageUrl: "",
     slug: "...",
   });
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${baseURL}/api/projects`);
+        const project = response.data.find((p) => p.slug === slug);
+        setProject(project);
+        console.log(project);
+
+        console.log("RESPONSE COMPLETA:", response);
+      } catch (error) {
+        console.error("Erro ao carregar o projeto: ", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   // Normalizador de dados para a Stack Tecnológica (Defesa contra retornos inconsistentes do DB)
   const formatTechStack = (techData) => {
@@ -102,7 +120,7 @@ const ProjectView = () => {
           {/* =========================================
               LEFT COLUMN: BLOCO DE INFORMAÇÕES
           ========================================= */}
-          <div className="lg:col-span-4 xl:col-span-5 flex flex-col gap-8 animate-in fade-in slide-in-from-left-4 duration-700">
+          <div className="lg:col-span-4 xl:col-span-4 flex flex-col gap-8 animate-in fade-in slide-in-from-left-4 duration-700">
             <header>
               <div className="flex items-center gap-3 mb-4">
                 <span className="font-mono text-[9px] text-[#BFA473] uppercase tracking-[0.3em] font-bold border border-[#BFA473]/30 px-2 py-1 bg-[#BFA473]/10">
@@ -140,37 +158,6 @@ const ProjectView = () => {
                 ))}
               </div>
             </div>
-
-            {/* Metadados Extras Simulados */}
-          </div>
-
-          {/* =========================================
-              RIGHT COLUMN: BLOCO DE INTERAÇÃO (IFRAME)
-          ========================================= */}
-          <div className="lg:col-span-8 xl:col-span-7 flex flex-col gap-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-150">
-            <div className="w-full bg-[#0A0C10] border border-white/10 p-2 sm:p-3 relative group flex flex-col">
-              {/* Fake Browser Header */}
-              <div className="flex items-center bg-[#050505] border border-white/5 rounded-t-md px-4 py-2 mb-2">
-                <div className="flex gap-1.5 mr-4">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                </div>
-                <div className="flex-1 bg-[#0A0C10] border border-white/5 rounded-sm px-3 py-1 text-[10px] font-mono text-slate-500 truncate text-center">
-                  {project.href}
-                </div>
-              </div>
-
-              <div className="relative w-full h-125 lg:h-70 overflow-hidden border border-white/5 bg-white rounded-b-sm">
-                <iframe
-                  src={project.href}
-                  title={`Preview interativo do projeto ${project.projectName}`}
-                  className="w-full h-full border-none"
-                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                />
-              </div>
-            </div>
-
             {/* Action CTA */}
             <div className="flex flex-col sm:flex-row items-center gap-4 justify-between bg-[#0A0C10] border border-white/10 p-5">
               <div className="flex flex-col w-full sm:w-auto overflow-hidden">
@@ -195,9 +182,44 @@ const ProjectView = () => {
                 />
               </a>
             </div>
+
+            {/* Metadados Extras Simulados */}
+          </div>
+
+          {/* =========================================
+              RIGHT COLUMN: BLOCO DE INTERAÇÃO (IFRAME)
+          ========================================= */}
+          <div className="lg:col-span-8 xl:col-span-8 flex flex-col gap-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-150">
+            <div className="w-full bg-[#0A0C10] border border-white/10 p-2 sm:p-3 relative group flex flex-col">
+              {/* Fake Browser Header */}
+              <div className="flex items-center bg-[#050505] border border-white/5 rounded-t-md px-4 py-2 mb-2">
+                <div className="flex gap-1.5 mr-4">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                </div>
+                <div className="flex-1 bg-[#0A0C10] border border-white/5 rounded-sm px-3 py-1 text-[10px] font-mono text-slate-500 truncate text-center">
+                  {project.href}
+                </div>
+              </div>
+
+              <div className="relative w-full h-125 lg:h-90 overflow-hidden border border-white/5 bg-white rounded-b-sm">
+                <iframe
+                  src={project.href}
+                  title={`Preview interativo do projeto ${project.projectName}`}
+                  className="w-full h-full border-none"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </main>
+      {isLoading && (
+        <>
+          <Loader />
+        </>
+      )}
     </div>
   );
 };
