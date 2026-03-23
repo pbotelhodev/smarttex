@@ -65,6 +65,7 @@ model VisitorLog {
 model Project {
   id          String @id @default(uuid())
   projectName String
+  description String?
   category    String
   tech        String[]
   href        String

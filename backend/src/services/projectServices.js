@@ -13,6 +13,7 @@ const projectService = async () => {
       imageUrl: true,
       highlight: true,
       slug: true,
+      description: true,
     },
     orderBy: {
       createdAt: "desc",
