@@ -63,7 +63,7 @@ const App = () => {
 
       if (!isLogin) {
         //Aqui verifica se é o login ou register(Sendo o register/Cadastro do usuário)
-        console.log(response.data.message);
+
         setIsLogin(true);
         handleAlert(
           "success",
@@ -71,8 +71,7 @@ const App = () => {
         );
       } else {
         //Aqui verifica se é o login ou register(Sendo o login do usuário)
-        console.log(response.data.message);
-        console.log(response.data.user);
+        
         handleAlert(
           "success",
           `Login bem-sucedido, Seja bem-vindo ${response.data.user.full_name}!` ,
@@ -82,7 +81,7 @@ const App = () => {
       //aqui tratamos erros de requisição, como falha de rede ou resposta inesperada
       if (error.response) {
         handleAlert("error", error.response.data.message);
-        console.log(error.response.data);
+       
       } else if (error.request) {
         console.error("Falha da rede ou CORS:", error.message);
         handleAlert("error", error.message);

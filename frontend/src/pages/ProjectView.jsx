@@ -30,9 +30,7 @@ const ProjectView = () => {
         const response = await axios.get(`${baseURL}/api/projects`);
         const project = response.data.find((p) => p.slug === slug);
         setProject(project);
-        console.log(project);
 
-        console.log("RESPONSE COMPLETA:", response);
       } catch (error) {
         console.error("Erro ao carregar o projeto: ", error.message);
       } finally {
@@ -227,7 +225,7 @@ const ProjectView = () => {
                 className="relative w-full aspect-video overflow-hidden border border-white/5 bg-[#0F1115] rounded-b-sm"
               >
                 <iframe
-                  src={project.href}
+                  src="{project.href}"
                   title={`Preview interativo do projeto`}
                   className="absolute top-0 left-0 border-none origin-top-left"
                   style={{

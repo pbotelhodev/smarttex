@@ -140,8 +140,6 @@ const App = () => {
       try {
         const response = await axios.get(`${baseURL}/api/projects`);
         setProjects(response.data);
-
-        console.log(projects);
       } catch (error) {
         console.error("Erro ao carregar os projetos: ", error.message);
       } finally {

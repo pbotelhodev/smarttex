@@ -28,7 +28,7 @@ const Portfolio = () => {
         const response = await axios.get(`${baseURL}/api/projects`);
         setProjects(response.data);
 
-        console.log("RESPONSE COMPLETA:", response);
+       
       } catch (error) {
         console.error("Erro ao carregar os projetos: ", error.message);
       } finally {
