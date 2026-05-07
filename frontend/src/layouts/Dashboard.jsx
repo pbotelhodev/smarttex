@@ -1,4 +1,3 @@
-import React from "react";
 import {
   DollarSign,
   FolderGit2,
@@ -23,7 +22,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6 p-6 md:p-8">
       {/* 1. AÇÕES RÁPIDAS (Atalhos) */}
       <div className="flex flex-wrap gap-3">
         <button className="bg-white hover:bg-slate-200 text-black px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-widest transition-all flex items-center gap-2 active:scale-[0.98]">
@@ -134,10 +133,10 @@ const Dashboard = () => {
           </div>
 
           {/* Gráfico CSS Puro (Estilo Equalizador/Terminal) */}
-          <div className="flex-1 min-h-[200px] flex items-end justify-between gap-2 pt-4 border-b border-white/5 pb-2 relative">
+          <div className="flex-1 min-h-50 flex items-end justify-between gap-2 pt-4 border-b border-white/5 pb-2 relative">
             {/* Linhas de grade de fundo */}
-            <div className="absolute w-full top-0 border-t border-white/[0.02] border-dashed"></div>
-            <div className="absolute w-full top-1/2 border-t border-white/[0.02] border-dashed"></div>
+            <div className="absolute w-full top-0 border-t border-white/2 border-dashed"></div>
+            <div className="absolute w-full top-1/2 border-t border-white/2 border-dashed"></div>
 
             {revenueData.map((data, index) => (
               <div
@@ -145,7 +144,7 @@ const Dashboard = () => {
                 className="flex flex-col items-center gap-2 w-full z-10 group"
               >
                 {/* Barras */}
-                <div className="w-full max-w-[40px] h-[160px] flex flex-col justify-end bg-white/[0.02] relative hover:bg-white/[0.04] transition-colors cursor-crosshair">
+                <div className="w-full max-w-10 h-40 flex flex-col justify-end bg-white/2 relative hover:bg-white/4 transition-colors cursor-crosshair">
                   {/* Barra Inadimplência */}
                   {data.default > 0 && (
                     <div
@@ -184,7 +183,7 @@ const Dashboard = () => {
               </h3>
             </div>
             <div className="divide-y divide-white/5">
-              <div className="p-4 hover:bg-white/[0.02] transition-colors">
+              <div className="p-4 hover:bg-white/2 transition-colors">
                 <p className="text-xs font-bold text-[#BFA473] mb-1">
                   Contrato TiJ próximo do vencimento
                 </p>
@@ -192,7 +191,7 @@ const Dashboard = () => {
                   Expira em 10 dias. Necessário renegociação de hosting.
                 </p>
               </div>
-              <div className="p-4 hover:bg-white/[0.02] transition-colors">
+              <div className="p-4 hover:bg-white/2 transition-colors">
                 <p className="text-xs font-bold text-red-400 mb-1">
                   Ticket #442: Queda de API
                 </p>
@@ -200,7 +199,7 @@ const Dashboard = () => {
                   Cliente Memora - Aguardando resposta há 4 horas.
                 </p>
               </div>
-              <div className="p-4 hover:bg-white/[0.02] transition-colors">
+              <div className="p-4 hover:bg-white/2 transition-colors">
                 <p className="text-xs font-bold text-orange-400 mb-1">
                   Pico de CPU detectado
                 </p>
@@ -220,7 +219,7 @@ const Dashboard = () => {
               </h3>
             </div>
             <div className="divide-y divide-white/5">
-              <div className="p-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+              <div className="p-4 flex items-center justify-between hover:bg-white/2 transition-colors">
                 <div>
                   <p className="text-xs font-bold text-slate-200 mb-1">
                     Deploy Memora v2.0
@@ -235,7 +234,7 @@ const Dashboard = () => {
                   </span>
                 </div>
               </div>
-              <div className="p-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+              <div className="p-4 flex items-center justify-between hover:bg-white/2 transition-colors">
                 <div>
                   <p className="text-xs font-bold text-slate-200 mb-1">
                     Revisão UI/UX Vestibule

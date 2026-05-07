@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -93,48 +93,17 @@ const App = () => {
   ]; */
 
   // --- ESTADOS ---
-  const [showIntro, setShowIntro] = useState(true);
-  const [isReturn, setIsReturn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [visitorName, setVisitorName] = useState(() => {
-    const name = localStorage.getItem("visitorName") || "";
 
-    if (name) {
-      setShowIntro(false);
-      setIsReturn(true);
-    }
-    return name;
-  });
   const [projects, setProjects] = useState([]);
 
   // chamada do UseForm
   const { register, handleSubmit, reset } = useForm();
 
-  // referência para o input da tela de introdução
-  const inputRef = useRef(null);
-
   // -- FUNÇÕES ---
   const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-
-  const handleLogVisitor = async (name) => {
-    setIsLoading(true);
-    const endpoint = `${baseURL}/api/visitor`;
-    const payload = { username: name };
-
-    //Fazemos a requisição pro backend
-    try {
-      //O axios dispara o post
-      const response = await axios.post(endpoint, payload);
-
-      console.log(response.data.message);
-    } catch (error) {
-      console.error("Falha de rede: ", error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleContact = async (data) => {
     try {
@@ -157,16 +126,6 @@ const App = () => {
     }
   };
 
-  const handleEnterSite = (e) => {
-    e.preventDefault();
-    if (visitorName.trim().length > 0) {
-      setShowIntro(false);
-      window.scrollTo(0, 0);
-      localStorage.setItem("visitorName", visitorName.trim());
-      handleLogVisitor(visitorName);
-    }
-  };
-
   // --- EFEITOS ---
   //Efeito para
   useEffect(() => {
@@ -176,17 +135,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (showIntro && inputRef.current) inputRef.current.focus();
-  }, [showIntro]);
-
-  useEffect(() => {
     const fetchProjects = async () => {
       setIsLoading(true);
       try {
         const response = await axios.get(`${baseURL}/api/projects`);
         setProjects(response.data);
 
-        console.log(projects)
+        console.log(projects);
       } catch (error) {
         console.error("Erro ao carregar os projetos: ", error.message);
       } finally {
@@ -196,69 +151,9 @@ const App = () => {
 
     fetchProjects();
   }, []);
-  // =================================================================
-  // 1. TELA DE INTRO
-  // =================================================================
-  if (showIntro) {
-    return (
-      <div className="fixed inset-0 bg-[#050505] z-100 flex flex-col items-center justify-center px-4 sm:px-6 transition-opacity duration-700">
-        <div className="w-full max-w-90 sm:max-w-100 flex flex-col items-center animate-fade-up">
-          <span className="font-mono text-xs sm:text-sm tracking-[0.3em] text-slate-400 uppercase mb-2">
-            BEM-VINDO À
-          </span>
-          <img
-            src={LogoSmarttex}
-            alt="Logo-Smarttex"
-            className="py-4 h-20 sm:h-24 mb-8 object-contain"
-          />
-          <form onSubmit={handleEnterSite} className="w-full flex flex-col">
-            <label className="font-mono text-2.5 text-slate-400 uppercase tracking-widest text-left pl-1 mb-2">
-              COMO PODEMOS TE CHAMAR?
-            </label>
-            <div className="relative w-full mb-8">
-              <input
-                ref={inputRef}
-                type="text"
-                value={visitorName}
-                onChange={(e) => setVisitorName(e.target.value)}
-                className="w-full bg-transparent border-b border-white/20 py-3 px-0 text-lg sm:text-xl text-white font-sans focus:border-white focus:outline-none transition-all placeholder:text-slate-800 rounded-none"
-                placeholder="Ex: Pedro Silva"
-              />
-            </div>
-            <button
-              type="submit"
-              className={`w-full bg-[#1A1A1A] hover:bg-[#333] text-white font-mono text-[11px] font-semibold py-4 uppercase tracking-[0.2em] transition-all duration-300 rounded-xs ${
-                !visitorName ? "opacity-70 cursor-not-allowed" : "opacity-100"
-              }`}
-              disabled={!visitorName}
-            >
-              CONTINUAR
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowIntro(false)}
-              className="text-slate-700 font-mono font-semibold text-[10px] mt-4 uppercase tracking-widest transition-opacity duration-300"
-            >
-              Pular
-            </button>
-          </form>
-          <p className="mt-5 text-slate-400 text-[10px] font-mono uppercase tracking-widest">
-            Tecnologia que transforma negócios.
-          </p>
-        </div>
-        <div>
-          {isLoading && (
-            <>
-              <Loader />
-            </>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   // =================================================================
-  // 2. SITE PRINCIPAL
+  // SITE PRINCIPAL
   // =================================================================
   return (
     <div className="min-h-screen bg-[#0F1115] text-slate-300 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 animate-in fade-in duration-1000">
@@ -405,11 +300,7 @@ const App = () => {
           <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-sm mb-5 md:mb-7 lg:mb-8 2xl:mb-9">
             <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
             <span className="font-mono text-[10px] md:text-xs text-slate-300 tracking-wider uppercase">
-              {isReturn ? `Bem vindo de volta, ` : "Olá "}
-              <span className="text-white font-bold">
-                {visitorName.toUpperCase() || "VISITANTE"}.
-              </span>{" "}
-              VAMOS CONSTRUIR ALGO {isReturn ? "Novo" : null} JUNTOS?
+              VAMOS CONSTRUIR ALGO JUNTOS?
             </span>
           </div>
 
@@ -1002,7 +893,6 @@ const App = () => {
                   <InputGroup
                     label="Nome Completo *"
                     placeholder="Seu nome"
-                    defaultValue={visitorName}
                     {...register("name", { required: true })}
                   />
                   <InputGroup
