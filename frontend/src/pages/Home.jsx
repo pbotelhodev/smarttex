@@ -150,7 +150,7 @@ const App = () => {
     };
 
     fetchProjects();
-  }, [baseURL, projects]);
+  }, []);
 
   // =================================================================
   // SITE PRINCIPAL
